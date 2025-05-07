@@ -11,9 +11,11 @@ func main() {
 		for _, target := range things {
 			diffCount := compareRunes(subject, target)
 			if diffCount == 1 {
-				fmt.Println(subject)
-				fmt.Println(target)
-				return //bail
+				_, err := fmt.Println(subject, target)
+				if err != nil {
+					panic("not expected")
+				}
+				return // bail
 			}
 		}
 	}

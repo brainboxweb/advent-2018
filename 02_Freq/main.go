@@ -1,23 +1,20 @@
 package main
 
 import (
-	"fmt"
 	"strconv"
 	"strings"
 )
 
 func main() {
-	register := make (map[int]int)
+	register := make(map[int]int)
 	things := strings.Split(input, "\n")
 	res := 0
 	for { // Infinite loop
-		fmt.Println("loooping")
 		for _, thing := range things {
 			num := stringToInt(thing)
 			res += num
-			_, ok := register[res] //Already stored?
+			_, ok := register[res] // Already stored?
 			if ok {
-				fmt.Println("Solution = ", res)
 				return // job done.
 			}
 			register[res] = 1

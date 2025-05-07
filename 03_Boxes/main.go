@@ -9,18 +9,19 @@ func main() {
 	things := strings.Split(input, "\n")
 	twiceCount, thriceCount := 0, 0
 	for _, thing := range things {
-
 		tokens := tokenise(thing)
 		if haveThisCount(tokens, 2) {
-			twiceCount ++
+			twiceCount++
 		}
 		if haveThisCount(tokens, 3) {
-			thriceCount ++
+			thriceCount++
 		}
 	}
-	fmt.Println(twiceCount * thriceCount)
+	_, err := fmt.Println(twiceCount * thriceCount)
+	if err != nil {
+		panic("not expected")
+	}
 }
-
 
 func haveThisCount(theSet map[rune]int, count int) bool {
 	for _, val := range theSet {
@@ -32,13 +33,13 @@ func haveThisCount(theSet map[rune]int, count int) bool {
 }
 
 func tokenise(theString string) map[rune]int {
-	register := make (map[rune]int)
+	register := make(map[rune]int)
 	for _, rune := range theString {
-		_, ok := register[rune] //Already stored?
+		_, ok := register[rune] // Already stored?
 		if !ok {
 			register[rune] = 1
 		} else {
-			register[rune] += 1
+			register[rune]++
 		}
 	}
 	return register
@@ -294,5 +295,3 @@ bvhfzwcnyoqxudzrpgslenmhkj
 bvhfkccnyoqxudzrpgzleimtkj
 bvhfawcnyoqzudzrpgslhimwkj
 bzhfawvnyooxudzrpgsleimtkj`
-
-
