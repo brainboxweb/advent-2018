@@ -7,7 +7,6 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-
 func TestGetDataString(t *testing.T) {
 	tests := []struct {
 		datafile string
