@@ -15,7 +15,6 @@ func TestOverlapCount(t *testing.T) {
 		w  int
 		h  int
 	}
-
 	tests := []struct {
 		input    []inputData
 		expected int
@@ -36,6 +35,39 @@ func TestOverlapCount(t *testing.T) {
 				fab.AddArea(data.id, data.x, data.y, data.w, data.h)
 			}
 			result := fab.OverlapCount()
+			assert.Equal(t, tt.expected, result)
+		})
+	}
+}
+
+func TestFindUnclaimed(t *testing.T) {
+	type inputData struct {
+		id int
+		x  int
+		y  int
+		w  int
+		h  int
+	}
+	tests := []struct {
+		input    []inputData
+		expected int
+	}{
+		{
+			input: []inputData{
+				{1, 1, 3, 4, 4},
+				{2, 3, 1, 4, 4},
+				{3, 5, 5, 2, 2},
+			},
+			expected: 3,
+		},
+	}
+	for _, tt := range tests {
+		t.Run("test", func(t *testing.T) {
+			fab := fabric.NewPiece()
+			for _, data := range tt.input {
+				fab.AddArea(data.id, data.x, data.y, data.w, data.h)
+			}
+			result := fab.FindNotOverlappedArea()
 			assert.Equal(t, tt.expected, result)
 		})
 	}
