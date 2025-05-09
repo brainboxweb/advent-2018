@@ -1,3 +1,4 @@
+// package day3 is Day 3 of the Advent of Code
 package day3
 
 import (
@@ -10,6 +11,11 @@ import (
 func Part1(data []string) int {
 	myFabric := populate(data)
 	return myFabric.OverlapCount()
+}
+
+func Part2(data []string) int {
+	myFabric := populate(data)
+	return myFabric.FindNotOverlappedArea()
 }
 
 func populate(data []string) *fabric.Piece {
