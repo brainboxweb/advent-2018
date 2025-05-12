@@ -17,6 +17,21 @@ const (
 )
 
 func Part1(data []string) int {
+	myCloset := setup(data)
+	guardID := myCloset.GetLongestSleep()
+	mostCommon := myCloset.GetMostCommonSleep(guardID)
+
+	return guardID * mostCommon
+}
+
+func Part2(data []string) int {
+	myCloset := setup(data)
+	guardID, theMinute := myCloset.MostFrequent()
+
+	return guardID * theMinute
+}
+
+func setup(data []string) *closet.Closet {
 	guardDataset := prepData(data)
 	myCloset := closet.New()
 	var guard *closet.Guard
@@ -31,10 +46,7 @@ func Part1(data []string) int {
 		}
 	}
 	myCloset.ProcessTimes()
-	guardID := myCloset.GetLongestSleep()
-	mostCommon := myCloset.GetMostCommonSleep(guardID)
-
-	return guardID * mostCommon
+	return myCloset
 }
 
 func prepData(data []string) []guardData {

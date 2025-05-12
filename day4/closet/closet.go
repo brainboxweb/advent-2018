@@ -42,6 +42,12 @@ func (c *Closet) AddGuard(id int) *Guard {
 	return guard
 }
 
+func (c *Closet) ProcessTimes() {
+	for _, guard := range c.guards {
+		guard.processTimes()
+	}
+}
+
 func (c *Closet) GetLongestSleep() int {
 	var maxSleep int
 	var maxSleepGuard int
@@ -53,12 +59,6 @@ func (c *Closet) GetLongestSleep() int {
 		}
 	}
 	return maxSleepGuard
-}
-
-func (c *Closet) ProcessTimes() {
-	for _, guard := range c.guards {
-		guard.processTimes()
-	}
 }
 
 func (c *Closet) GetMostCommonSleep(guardID int) int {
@@ -77,6 +77,39 @@ func (c *Closet) GetMostCommonSleep(guardID int) int {
 	}
 	return maxMn
 }
+
+func (c *Closet) MostFrequent() (maxSleepGuard, maxSleepMinute int) {
+	allMinutes := c.buildMinuteMap()
+	var maxSleepCount int
+	for mn, thing := range allMinutes {
+		for guideID, count := range thing {
+			if count > maxSleepCount {
+				maxSleepCount = count
+				maxSleepGuard = guideID
+				maxSleepMinute = mn
+			}
+		}
+	}
+	return maxSleepGuard, maxSleepMinute
+}
+
+func (c *Closet) buildMinuteMap() map[int]map[int]int {
+	allMinutes := make(map[int]map[int]int) // minute, guard, frequency
+	for mn := 0; mn < 60; mn++ {
+		guardMn := make(map[int]int) // guard, frequency
+		for _, guard := range c.guards {
+			for _, sleep := range guard.sleeps {
+				if sleep == mn {
+					guardMn[guard.id]++
+				}
+			}
+		}
+		allMinutes[mn] = guardMn
+	}
+	return allMinutes
+}
+
+// --- Guard
 
 func (g *Guard) AddAction(act string, theTime time.Time) error {
 	if !(act == actionSleep || act == actionWake) {

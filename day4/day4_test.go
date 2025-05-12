@@ -32,3 +32,26 @@ func TestPart1(t *testing.T) {
 		})
 	}
 }
+
+func TestPart2(t *testing.T) {
+	tests := []struct {
+		dataFile string
+		expected int
+	}{
+		{
+			"day4_test.txt",
+			4455,
+		},
+		{
+			"day4.txt",
+			16164,
+		},
+	}
+	for _, tt := range tests {
+		t.Run("test", func(t *testing.T) {
+			dataset := helpers.GetDataString(dataPath + "/" + tt.dataFile)
+			result := day4.Part2(dataset)
+			assert.Equal(t, tt.expected, result)
+		})
+	}
+}
